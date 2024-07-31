@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/constants/routes.dart';
 import 'package:new_app/firebase_helper/firestore/firestore_functions.dart';
 import 'package:new_app/models/product_model.dart';
+import 'package:new_app/screens/cart_page/cart_page.dart';
 import 'package:new_app/widgets/product_item.dart';
 
 class ProductsPerCategory extends StatefulWidget {
@@ -39,16 +41,14 @@ class _ProductsPerCategoryState extends State<ProductsPerCategory> {
       appBar: AppBar(
         title: const Text('E-commerce App'),
         actions: [
-          const Text(
-            "Hello Raj",
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
           IconButton(
             icon: const Icon(Icons.person),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
             onPressed: () {
-              // Handle user profile action
+              Routes.instance.push(CartPage(), context);
             },
           ),
         ],

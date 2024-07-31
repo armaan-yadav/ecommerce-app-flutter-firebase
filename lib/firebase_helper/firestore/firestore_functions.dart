@@ -69,6 +69,23 @@ class FirestoreFunctions {
   }
 
   Future<String> getCategoryName(String id) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firebaseFirestore
+              .collection("categories")
+              .where("id", isEqualTo: id)
+              .get();
+
+      List<CategoryModel> categoryList = querySnapshot.docs
+          .map(
+            (e) => CategoryModel.fromJson(e.data()),
+          )
+          .toList();
+
+      return categoryList[0].name;
+    } catch (e) {
+      print(e.toString());
+    }
     return "";
   }
 }

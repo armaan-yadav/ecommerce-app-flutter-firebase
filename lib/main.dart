@@ -2,8 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:new_app/constants/theme_data.dart';
 import 'package:new_app/firebase_options.dart';
+import 'package:new_app/provider/cart_provider.dart';
 import 'package:new_app/screens/auth/auth_gate.dart';
-import 'package:new_app/screens/products_per_category/products_per_category.dart';
+import 'package:new_app/widgets/favourite_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +20,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Ecommerce App',
-      debugShowCheckedModeBanner: false,
-      theme: themeData,
-      home: AuthGate(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FavouriteProvider(),
+        )
+      ],
+      child: MaterialApp(
+        title: 'Ecommerce App',
+        debugShowCheckedModeBanner: false,
+        theme: themeData,
+        home: AuthGate(),
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/constants/routes.dart';
 import 'package:new_app/models/product_model.dart';
-import 'package:new_app/widgets/product_description.dart';
+import 'package:new_app/screens/product_description/product_description.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({
@@ -15,7 +15,11 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Routes.instance.push(ProductDescription(product: product), context);
+        Routes.instance.push(
+            ProductDescription(
+              product: product,
+            ),
+            context);
       },
       child: Card(
         elevation: 4,
@@ -29,6 +33,10 @@ class ProductItem extends StatelessWidget {
                   product.imageUrl,
                   fit: BoxFit.contain,
                   width: double.infinity,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                        child: Text("Error while loading image"));
+                  },
                 ),
               ),
               Column(

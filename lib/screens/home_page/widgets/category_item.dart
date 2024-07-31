@@ -38,6 +38,9 @@ class CategoryItem extends StatelessWidget {
             Expanded(
               child: Image.network(
                 imageUrl,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(child: Text("Error while loading image"));
+                },
               ),
             ),
             Text(

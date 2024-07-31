@@ -3,12 +3,16 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:new_app/constants/routes.dart';
 import 'package:new_app/firebase_helper/firestore/firestore_functions.dart';
 import 'package:new_app/models/category_model.dart';
-import 'package:new_app/widgets/category_item.dart';
+import 'package:new_app/provider/cart_provider.dart';
+import 'package:new_app/screens/cart_page/cart_page.dart';
+import 'package:new_app/screens/home_page/widgets/category_item.dart';
 import 'package:new_app/models/product_model.dart';
 import 'package:new_app/widgets/product_item.dart';
 import 'package:new_app/widgets/searchbar.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -53,29 +57,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? Center(
-            child: Container(
-              alignment: Alignment.center,
-              height: 30,
-              width: 30,
-              color: Colors.white,
-              child: const CircularProgressIndicator(),
-            ),
+        ? Container(
+            alignment: Alignment.center,
+            height: 30,
+            width: 30,
+            color: Colors.white,
+            child: const CircularProgressIndicator(),
           )
         : Scaffold(
             appBar: AppBar(
               title: const Text('E-commerce App'),
               actions: [
-                const Text(
-                  "Hello Raj",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
                 IconButton(
                   icon: const Icon(Icons.person),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: const Icon(Icons.shopping_cart),
                   onPressed: () {
-                    // Handle user profile action
+                    Routes.instance.push(CartPage(), context);
                   },
                 ),
               ],
