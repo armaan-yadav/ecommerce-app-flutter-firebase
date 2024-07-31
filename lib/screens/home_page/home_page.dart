@@ -1,18 +1,13 @@
-import 'dart:io';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:new_app/constants/routes.dart';
 import 'package:new_app/firebase_helper/firestore/firestore_functions.dart';
 import 'package:new_app/models/category_model.dart';
-import 'package:new_app/provider/cart_provider.dart';
 import 'package:new_app/screens/cart_page/cart_page.dart';
+import 'package:new_app/screens/favourites_page/favourites_page.dart';
 import 'package:new_app/screens/home_page/widgets/category_item.dart';
 import 'package:new_app/models/product_model.dart';
 import 'package:new_app/widgets/product_item.dart';
 import 'package:new_app/widgets/searchbar.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -69,13 +64,19 @@ class _HomePageState extends State<HomePage> {
               title: const Text('E-commerce App'),
               actions: [
                 IconButton(
+                  onPressed: () {
+                    Routes.instance.push(const FavouritesPage(), context);
+                  },
+                  icon: const Icon(Icons.favorite),
+                ),
+                IconButton(
                   icon: const Icon(Icons.person),
                   onPressed: () {},
                 ),
                 IconButton(
                   icon: const Icon(Icons.shopping_cart),
                   onPressed: () {
-                    Routes.instance.push(CartPage(), context);
+                    Routes.instance.push(const CartPage(), context);
                   },
                 ),
               ],
@@ -106,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 10),
                   categories.isEmpty
-                      ? Text("Categories is empty")
+                      ? const Text("Categories is empty")
                       : SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
@@ -137,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                   // Top selling items grid
 
                   bestProducts.isEmpty
-                      ? Text("Best  products is empty")
+                      ? const Text("Best  products is empty")
                       : GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,

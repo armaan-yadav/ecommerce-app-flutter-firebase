@@ -3,6 +3,7 @@ import 'package:new_app/constants/routes.dart';
 import 'package:new_app/firebase_helper/firestore/firestore_functions.dart';
 import 'package:new_app/models/product_model.dart';
 import 'package:new_app/screens/cart_page/cart_page.dart';
+import 'package:new_app/screens/favourites_page/favourites_page.dart';
 import 'package:new_app/widgets/product_item.dart';
 
 class ProductsPerCategory extends StatefulWidget {
@@ -39,8 +40,20 @@ class _ProductsPerCategoryState extends State<ProductsPerCategory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('E-commerce App'),
+        title: Text(
+          widget.categoryName,
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
         actions: [
+          IconButton(
+            onPressed: () {
+              Routes.instance.push(const FavouritesPage(), context);
+            },
+            icon: const Icon(Icons.favorite),
+          ),
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () {},
@@ -48,7 +61,7 @@ class _ProductsPerCategoryState extends State<ProductsPerCategory> {
           IconButton(
             icon: const Icon(Icons.shopping_cart),
             onPressed: () {
-              Routes.instance.push(CartPage(), context);
+              Routes.instance.push(const CartPage(), context);
             },
           ),
         ],
@@ -56,16 +69,6 @@ class _ProductsPerCategoryState extends State<ProductsPerCategory> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                widget.categoryName,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
             Container(
               color: Colors.amber,
               height: MediaQuery.of(context).size.height + 100,

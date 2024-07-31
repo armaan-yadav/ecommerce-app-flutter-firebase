@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:new_app/constants/routes.dart';
 import 'package:new_app/constants/toast.dart';
-import 'package:new_app/firebase_helper/firestore/firestore_functions.dart';
 import 'package:new_app/models/product_model.dart';
 import 'package:new_app/provider/cart_provider.dart';
+import 'package:new_app/provider/favourite_provider.dart';
 import 'package:new_app/screens/cart_page/cart_page.dart';
+import 'package:new_app/screens/favourites_page/favourites_page.dart';
 import 'package:provider/provider.dart';
 
 class ProductDescription extends StatefulWidget {
@@ -25,20 +26,24 @@ class _ProductDescriptionState extends State<ProductDescription> {
   bool isFavourite = false;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var buttonTextStyle = const TextStyle(
       color: Colors.white,
       fontSize: 20,
     );
 
+    final favProvider = Provider.of<FavouriteProvider>(context);
+    isFavourite = favProvider.isFavouriteProduct(widget.product);
+
     return Scaffold(
       appBar: AppBar(
         actions: [
+          IconButton(
+            onPressed: () {
+              Routes.instance.push(const FavouritesPage(), context);
+            },
+            icon: const Icon(Icons.favorite),
+          ),
           IconButton(
               onPressed: () {
                 Routes.instance.push(const CartPage(), context);
@@ -65,6 +70,13 @@ class _ProductDescriptionState extends State<ProductDescription> {
                   GestureDetector(
                     onTap: () => setState(() {
                       isFavourite = !isFavourite;
+
+                      if (isFavourite) {
+                        favProvider.addProductsToFavourite(widget.product);
+                      } else {
+                        favProvider.removeProductsFromFavourite(widget.product);
+                      }
+
                       if (isFavourite) {
                         showToastMessage(
                           message: "Added to Favorites",

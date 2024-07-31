@@ -4,7 +4,7 @@ import 'package:new_app/constants/theme_data.dart';
 import 'package:new_app/firebase_options.dart';
 import 'package:new_app/provider/cart_provider.dart';
 import 'package:new_app/screens/auth/auth_gate.dart';
-import 'package:new_app/widgets/favourite_provider.dart';
+import 'package:new_app/provider/favourite_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => FavouriteProvider(),
-        )
+        ),
       ],
       child: MaterialApp(
         title: 'Ecommerce App',
