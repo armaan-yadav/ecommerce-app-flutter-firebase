@@ -14,5 +14,5 @@ void showToastMessage({
     backgroundColor: backgroundColor,
     textColor: Colors.white,
     fontSize: 16.0,
-  );
+  );  
 }
